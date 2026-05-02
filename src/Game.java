@@ -25,9 +25,7 @@ public class Game {
         }
     }
 
-    public boolean checkWin() {
-
-    }
+    public boolean checkWin() {}
 
     public boolean checkHorizontally(int playerId) {
         int winLength = gameBoard.getWinLength();

@@ -1,16 +1,16 @@
 public class Player {
-    private int id;
+    private int value;
     private String name;
     private int wins;
 
     public Player(int id) {
-        this.id = id;
+        this.value = id;
         this.name = "Player " + id;
         this.wins = 0;
     }
 
-    public int getId() {
-        return id;
+    public int getValue() {
+        return value;
     }
 
     public String getName() {

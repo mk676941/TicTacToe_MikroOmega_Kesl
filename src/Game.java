@@ -2,88 +2,165 @@ public class Game {
     private GameBoard gameBoard;
     private Player player1;
     private Player player2;
-    private int currentPlayer;
+    private Player currentPlayer;
+    private int moves;
+
+    private int lastRow;
+    private int lastColumn;
 
     public Game(GameBoard gameBoard, Player player1, Player player2) {
         this.gameBoard = gameBoard;
         this.player1 = player1;
         this.player2 = player2;
-        this.currentPlayer = player1.getId();
+        this.currentPlayer = player1;
+        this.moves = 0;
+        this.lastRow = -1;
+        this.lastColumn = -1;
+    }
+
+    public String play(int row, int column) {
+        if (!makeMove(row, column)) {
+            return "Invalid move";
+        }
+
+        if (checkWin()) {
+            currentPlayer.addWin();
+            return "Win";
+        }
+
+        if (moves == gameBoard.getRows() * gameBoard.getColumns()) {
+            return "Draw";
+        }
+
+        switchPlayer();
+        return "Continue";
     }
 
     public void switchPlayer() {
-        currentPlayer = (currentPlayer == player1.getId()) ? player2.getId() : player1.getId();
+        currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 
-    public int getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public void makeMove(int row, int column) {
-        if (!gameBoard.isOccupied(row, column)) {
-            gameBoard.occupy(row, column, currentPlayer);
+    public boolean makeMove(int row, int column) {
+        if (!isInBounds(row, column)) {
+            return false;
+        }
+
+        if (gameBoard.isOccupied(row, column)) {
+            return false;
+        } else {
+            gameBoard.occupy(row, column, currentPlayer.getValue());
+
+            this.lastRow = row;
+            this.lastColumn = column;
+
+            moves++;
+
+            return true;
         }
     }
 
-    public boolean checkWin() {}
+    private boolean isInBounds(int row, int column) {
+        return row >= 0 && row < gameBoard.getRows() && column >= 0 && column < gameBoard.getColumns();
+    }
 
-    public boolean checkHorizontally(int playerId) {
-        int winLength = gameBoard.getWinLength();
+    public boolean checkWin() {
+        if (checkHorizontally(lastRow, lastColumn, currentPlayer) >= gameBoard.getWinLength()) return true;
+        if (checkVertically(lastRow, lastColumn, currentPlayer) >= gameBoard.getWinLength()) return true;
+        if (checkDiagonally1(lastRow, lastColumn, currentPlayer) >= gameBoard.getWinLength()) return true;
+        if (checkDiagonally2(lastRow, lastColumn, currentPlayer) >= gameBoard.getWinLength()) return true;
 
-        for (int i = 0; i < gameBoard.getRows(); i++) {
-            int count = 0;
-
-            for (int j = 0; j < gameBoard.getColumns(); j++) {
-                if (gameBoard.getCell(i, j) == playerId) {
-                    count++;
-                    if (count >= winLength) {
-                        return true;
-                    }
-                } else {
-                    count = 0;
-                }
-            }
-        }
         return false;
     }
 
-    public boolean checkVertically(int playerId) {
-        int winLength = gameBoard.getWinLength();
+    private int checkHorizontally(int row, int column, Player player) {
+        int count = 1;
 
-        for (int i = 0; i < gameBoard.getColumns(); i++) {
-            int count = 0;
-
-            for (int j = 0; j < gameBoard.getRows(); j++) {
-                if (gameBoard.getCell(i, j) == playerId) {
-                    count++;
-                    if (count >= winLength) {
-                        return true;
-                    }
-                } else {
-                    count = 0;
-                }
-            }
+        //right check
+        int c = column + 1;
+        while (c <gameBoard.getColumns() && gameBoard.getCell(row, c) == player.getValue()) {
+            count++;
+            c++;
         }
-        return false;
+
+        //left check
+        c = column - 1;
+        while (c >= 0 && gameBoard.getCell(row, c) == player.getValue()) {
+            count++;
+            c--;
+        }
+
+        return count;
     }
 
-    public boolean checkDiagonally(int playerId) {
-        int winLength = gameBoard.getWinLength();
+    private int checkVertically(int row, int column, Player player) {
+        int count = 1;
 
-        for (int i = 0; i < gameBoard.getRows(); i++) {
-            int count = 0;
-
-            for (int j = 0; j < gameBoard.getColumns(); j++) {
-                if (gameBoard.getCell(i, j) == playerId) {
-                    count++;
-                    if (count >= winLength) {
-                        return true;
-                    }
-                } else {
-                    count = 0;
-                }
-            }
+        //down check
+        int r = row + 1;
+        while (r<gameBoard.getRows() && gameBoard.getCell(r, column) == player.getValue()) {
+            count++;
+            r++;
         }
-        return false;
+
+        //up check
+        r = row - 1;
+        while (r >= 0 && gameBoard.getCell(r, column) == player.getValue()) {
+            count++;
+            r--;
+        }
+
+        return count;
+    }
+
+   private int checkDiagonally1(int row, int column, Player player) {
+       int count = 1;
+
+       //down right check
+       int r = row + 1;
+       int c = column + 1;
+       while (r<gameBoard.getRows() && c < gameBoard.getColumns() && gameBoard.getCell(r, c) == player.getValue()) {
+           count++;
+           r++;
+           c++;
+       }
+
+       //up left check
+       r = row - 1;
+       c = column - 1;
+       while (r >= 0 && c >= 0 && gameBoard.getCell(r, c) == player.getValue()) {
+           count++;
+           r--;
+           c--;
+       }
+
+       return count;
+   }
+
+    private int checkDiagonally2(int row, int column, Player player) {
+        int count = 1;
+
+        //down left check
+        int r = row + 1;
+        int c = column - 1;
+        while (r<gameBoard.getRows() && c >= 0 && gameBoard.getCell(r, c) == player.getValue()) {
+            count++;
+            r++;
+            c--;
+        }
+
+        //up right check
+        r = row - 1;
+        c = column + 1;
+        while (r >= 0 && c < gameBoard.getColumns() && gameBoard.getCell(r, c) == player.getValue()) {
+            count++;
+            r--;
+            c++;
+        }
+
+        return count;
     }
 }

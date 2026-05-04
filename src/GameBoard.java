@@ -4,7 +4,7 @@ public class GameBoard {
     private int columns;
     private int winLength;
 
-    public GameBoard(int[][] board, int rows, int columns, int winLength) {
+    public GameBoard(int rows, int columns, int winLength) {
         this.board = new int[rows][columns];
         this.rows = rows;
         this.columns = columns;
@@ -42,5 +42,7 @@ public class GameBoard {
     public void changeDifficulty(int rows, int columns, int winLength) {
         this.board = new int[rows][columns];
         this.winLength = winLength;
+        this.rows = rows;
+        this.columns = columns;
     }
 }

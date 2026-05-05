@@ -12,10 +12,10 @@ public class Game {
     private int lastRow;
     private int lastColumn;
 
-    public Game(GameBoard gameBoard, Player player1, Player player2) {
-        this.gameBoard = gameBoard;
-        this.player1 = player1;
-        this.player2 = player2;
+    public Game() {
+        this.gameBoard = new GameBoard(3, 3, 3);
+        this.player1 = new Player(1);
+        this.player2 = new Player(2);
         this.currentPlayer = player1;
         this.moves = 0;
         this.lastRow = -1;

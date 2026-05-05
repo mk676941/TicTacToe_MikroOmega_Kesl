@@ -45,4 +45,8 @@ public class GameBoard {
         this.rows = rows;
         this.columns = columns;
     }
+
+    public void reset() {
+        this.board = new int[rows][columns];
+    }
 }

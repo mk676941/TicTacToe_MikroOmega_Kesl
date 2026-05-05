@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Game {
     private GameBoard gameBoard;
     private Player player1;
@@ -34,6 +38,10 @@ public class Game {
 
         switchPlayer();
         return "Continue";
+    }
+
+    public void restart() {
+       gameBoard.reset();
     }
 
     public void switchPlayer() {

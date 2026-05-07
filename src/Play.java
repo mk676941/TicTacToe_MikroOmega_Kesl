@@ -5,10 +5,22 @@ import java.awt.*;
 public class Play extends JPanel {
     private Game game;
     private JButton[][] buttons;
-    private JPanel overlay;
-    private JPanel resultLabel;
 
-    public Play(Main frame) {
+    public void showResult(String text) {
+        JPanel result = new JPanel();
+        result.setBackground(new Color(0, 0, 0, 150));
+
+        JLabel txt = new JLabel(text);
+        txt.setFont(new Font("Arial", Font.BOLD, 40));
+        result.add(txt);
+
+        add(result, BorderLayout.NORTH);
+
+        revalidate();
+        repaint();
+    }
+
+    public Play(MainFrame frame) {
         game = new Game();
         buttons = new JButton[3][3];
 
@@ -36,12 +48,20 @@ public class Play extends JPanel {
                     buttons[row][col].setEnabled(false);
 
                     if (result.equals("Win")) {
+                        gameGrid.setVisible(false);
                         showResult(game.getCurrentPlayer().getName() + " won the game.");
                         disableAllButtons();
 
+                        revalidate();
+                        repaint();
+
                     } else if (result.equals("Draw")) {
+                        gameGrid.setVisible(false);
                         showResult("The game resulted in a draw.");
                         disableAllButtons();
+
+                        revalidate();
+                        repaint();
                     }
                 });
 
@@ -58,4 +78,6 @@ public class Play extends JPanel {
             }
         }
     }
+
+
 }

@@ -3,6 +3,7 @@ import javax.swing.*;
 public class MainFrame extends JFrame {
 
     public MainFrame() {
+        setTitle("Shrews");
         setSize(1200, 800);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -18,7 +19,7 @@ public class MainFrame extends JFrame {
     }
 
     public void showPlay() {
-        setContentPane(new Play(this));
+        new Play();
         revalidate();
         repaint();
     }

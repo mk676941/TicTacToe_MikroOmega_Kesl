@@ -40,6 +40,14 @@ public class Game {
         return "Continue";
     }
 
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
+
+    public void setMoves(int moves) {
+        this.moves = moves;
+    }
+
     public void restart() {
        gameBoard.reset();
     }

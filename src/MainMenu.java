@@ -12,7 +12,6 @@ public class MainMenu extends JPanel {
         label.setFont(new Font("Arial", Font.BOLD, 80));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(label);
-        add(Box.createVerticalStrut(60));
 
         JButton play = new JButton("PLAY");
         play.setFont(new Font("Arial", Font.BOLD, 20));

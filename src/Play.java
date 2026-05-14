@@ -5,20 +5,27 @@ public class Play extends JFrame {
     private Game game;
     private JButton[][] buttons;
     private JPanel lowerPanel;
+    private JButton exit;
+    private JButton reset;
 
     public void showResult(String text) {
-
-        this.setSize(1100, 600);
-        setLocationRelativeTo(null);
-        JPanel result = new JPanel(new BorderLayout());
-
         JLabel txt = new JLabel(text);
-        txt.setFont(new Font("Arial", Font.BOLD, 80));
-        txt.setHorizontalAlignment(SwingConstants.CENTER);
 
-        getContentPane().removeAll();
-        result.add(txt, BorderLayout.CENTER);
-        add(result, BorderLayout.CENTER);
+        txt.setFont(new Font("Arial", Font.BOLD, 60));
+        txt.setForeground(Color.RED);
+
+        txt.setHorizontalAlignment(SwingConstants.CENTER);
+        txt.setVerticalAlignment(SwingConstants.CENTER);
+
+        JPanel overlay = new JPanel(new BorderLayout());
+        overlay.setOpaque(false);
+
+        overlay.add(txt, BorderLayout.CENTER);
+
+        setGlassPane(overlay);
+        overlay.setVisible(true);
+
+        reset.setVisible(false);
 
         revalidate();
         repaint();
@@ -61,7 +68,6 @@ public class Play extends JFrame {
 
                     if (result.equals("Win")) {
                         showResult(game.getCurrentPlayer().getName() + " won the game!");
-
                         disableAllButtons();
 
                         revalidate();
@@ -84,7 +90,7 @@ public class Play extends JFrame {
         lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
         lowerPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 60, 30));
 
-        JButton reset = new JButton("RESET");
+        reset = new JButton("RESET");
         reset.setAlignmentX(Component.CENTER_ALIGNMENT);
         reset.setFont(new Font("Arial", Font.BOLD, 20));
         reset.setMaximumSize(new Dimension(200, 60));
@@ -104,8 +110,18 @@ public class Play extends JFrame {
             revalidate();
             repaint();
         });
-
         lowerPanel.add(reset);
+
+        exit = new JButton("EXIT");
+        exit.setAlignmentX(Component.CENTER_ALIGNMENT);
+        exit.setFont(new Font("Arial", Font.BOLD, 20));
+        exit.setMaximumSize(new Dimension(200, 60));
+        exit.setPreferredSize(new Dimension(200, 60));
+        exit.setFocusPainted(false);
+
+        exit.addActionListener(e -> this.setVisible(false));
+        lowerPanel.add(exit);
+
         add(lowerPanel, BorderLayout.SOUTH);
     }
 

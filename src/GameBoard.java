@@ -1,21 +1,21 @@
 public class GameBoard {
-    private int[][] board;
+    private String[][] board;
     private int rows;
     private int columns;
     private int winLength;
 
     public GameBoard(int rows, int columns, int winLength) {
-        this.board = new int[rows][columns];
+        this.board = new String[rows][columns];
         this.rows = rows;
         this.columns = columns;
         this.winLength = winLength;
     }
 
-    public int[][] getBoard() {
+    public String[][] getBoard() {
         return board;
     }
 
-    public int getCell(int row, int column) {
+    public String getCell(int row, int column) {
         return board[row][column];
     }
 
@@ -32,21 +32,21 @@ public class GameBoard {
     }
 
     public boolean isOccupied(int row, int column) {
-        return board[row][column] != 0;
+        return board[row][column] != null;
     }
 
-    public void occupy(int row, int column, int value) {
+    public void occupy(int row, int column, String value) {
         this.board[row][column] = value;
     }
 
     public void changeDifficulty(int rows, int columns, int winLength) {
-        this.board = new int[rows][columns];
+        this.board = new String[rows][columns];
         this.winLength = winLength;
         this.rows = rows;
         this.columns = columns;
     }
 
     public void reset() {
-        this.board = new int[rows][columns];
+        this.board = new String[rows][columns];
     }
 }

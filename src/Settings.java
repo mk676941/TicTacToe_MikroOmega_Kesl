@@ -1,2 +1,5 @@
-public class Settings {
+import javax.swing.*;
+
+public class Settings extends JFrame {
+
 }

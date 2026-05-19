@@ -1,15 +1,15 @@
 public class Player {
-    private int value;
+    private String value;
     private String name;
     private int wins;
 
-    public Player(int id) {
+    public Player(String id, String name) {
         this.value = id;
-        this.name = "Player " + id;
+        this.name = name;
         this.wins = 0;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 

@@ -8,7 +8,7 @@ public class MainMenu extends JPanel {
     public MainMenu(MainFrame frame) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel("Shrews");
+        JLabel label = new JLabel("Tic-Tac-Toe");
         label.setFont(new Font("Arial", Font.BOLD, 80));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(label);

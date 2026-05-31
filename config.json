@@ -9,8 +9,8 @@
   "player2Name": "Player 2",
   "color1": "#000000",
   "color2": "#000000",
-  "gamesPlayed": 3,
-  "draws": 1,
-  "p1Wins": 2,
+  "gamesPlayed": 0,
+  "draws": 0,
+  "p1Wins": 0,
   "p2Wins": 0
 }

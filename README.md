@@ -14,7 +14,7 @@ All game settings and statistics are saved inside a JSON file.
 ## Game settings
 - Game difficulty (game board size and win line length)
 - X symbol color
-- Y symbol color
+- O symbol color
 - Player 1 name
 - Player 2 name
 - Resetting statistics

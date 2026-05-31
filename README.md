@@ -29,10 +29,15 @@ All game settings and statistics are saved inside a JSON file.
 
 ## How to run the game
 For running the game, you have to have Java 23 installed.
-1. Download the Game folder
-2. Open a command prompt inside the folder
-3. Run the game using this command:
+1. Download the latest release asset
+2. Extract the zip file with the game jar
+3. Open a command prompt and change the current folder to location of the jar file
+4. Run the game using this command:
 ```bash
 java -jar Tic-Tac-Toe.jar
 ```
 If you run the jar outside the folder, your saved data wont load into the game.
+In case you experience a bug with the color pickers, add the following java option to the command when you run the game:
+```bash
+-Dsun.java2d.d3d=false
+```

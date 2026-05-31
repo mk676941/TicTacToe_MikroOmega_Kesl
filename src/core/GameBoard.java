@@ -1,9 +1,17 @@
+package core;
+
+/**
+ * game board management class
+ * used for creating amd managing a game board
+ * @author Matej Kesl
+ */
 public class GameBoard {
     private String[][] board;
     private int rows;
     private int columns;
     private int winLength;
 
+    //constructor
     public GameBoard(int rows, int columns, int winLength) {
         this.board = new String[rows][columns];
         this.rows = rows;
@@ -11,10 +19,7 @@ public class GameBoard {
         this.winLength = winLength;
     }
 
-    public String[][] getBoard() {
-        return board;
-    }
-
+    //getters
     public String getCell(int row, int column) {
         return board[row][column];
     }
@@ -31,21 +36,30 @@ public class GameBoard {
         return winLength;
     }
 
+    /**
+     * method for checking is a space is occupied
+     * @param row - game board row
+     * @param column - game board column
+     * @return boolean - true if a space is occupied
+     *                 - false if a space isn't occupied
+     */
     public boolean isOccupied(int row, int column) {
         return board[row][column] != null;
     }
 
+    /**
+     * method for occupying a space
+     * @param row - game board row
+     * @param column - game board column
+     * @param value - value to put into a space
+     */
     public void occupy(int row, int column, String value) {
         this.board[row][column] = value;
     }
 
-    public void changeDifficulty(int rows, int columns, int winLength) {
-        this.board = new String[rows][columns];
-        this.winLength = winLength;
-        this.rows = rows;
-        this.columns = columns;
-    }
-
+    /**
+     * method for reseting a game board
+     */
     public void reset() {
         this.board = new String[rows][columns];
     }

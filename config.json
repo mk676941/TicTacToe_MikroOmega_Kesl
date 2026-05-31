@@ -1,0 +1,16 @@
+{
+  "board": {
+    "rows": 3,
+    "columns": 3,
+    "winLength": 3,
+    "name": "DEFAULT - 3x3 board ; 3 symbol winline"
+  },
+  "player1Name": "Player 1",
+  "player2Name": "Player 2",
+  "color1": "#000000",
+  "color2": "#000000",
+  "gamesPlayed": 2,
+  "draws": 0,
+  "p1Wins": 2,
+  "p2Wins": 0
+}

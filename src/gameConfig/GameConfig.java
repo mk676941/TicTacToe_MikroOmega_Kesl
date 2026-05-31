@@ -3,7 +3,7 @@ package gameConfig;
 import gameBoard.BoardConfig;
 
 /**
- * game config classs
+ * GameConfig class
  * used for managing a game config
  * all data are loaded from this class
  * contains stats and settings management methods
@@ -41,7 +41,7 @@ public class GameConfig{
     }
 
     /**
-     * method for reseting stats
+     * method used for resetting stats
      */
     public void resetStats() {
         draws = 0;

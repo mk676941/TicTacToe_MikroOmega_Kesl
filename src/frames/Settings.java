@@ -9,6 +9,12 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 
+/**
+ * Settings frame class
+ * used for setting up the Settings frame
+ * contains constructor for setting up the frame and its content
+ * @author Matej Kesl
+ */
 public class Settings extends JFrame {
     private JPanel settingsMenu;
     private JPanel titles;
@@ -19,9 +25,21 @@ public class Settings extends JFrame {
     private JLabel color1;
     private JLabel color2;
 
+    /**
+     * Settings constructor
+     * contains difficulty settings dropdown
+     * contains set difficulty button
+     * contains 2 color pickers
+     * contains reset stats button
+     * contains export stats button
+     * contains default settings button
+     * contains exit button
+     * @param mainFrame - MainFrame for loading game data
+     */
     public Settings(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
 
+        //frame
         setTitle("Settings");
         setSize(1200, 1000);
         setLocationRelativeTo(null);
@@ -29,26 +47,30 @@ public class Settings extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        //settings panel
         settingsMenu = new JPanel();
         settingsMenu.setLayout((new BoxLayout(settingsMenu, BoxLayout.Y_AXIS)));
         settingsMenu.setBorder(BorderFactory.createEmptyBorder(50, 50, 50 ,150));
 
+        //difficulties for dropdown
         BoardConfig[] difficulties = {GamePresets.DEFAULT, GamePresets.EASY, GamePresets.MEDIUM, GamePresets.HARD};
 
+        //dropdown
         difficultyBox = new JComboBox<>(difficulties);
-
         difficultyBox.setMaximumSize(new Dimension(450, 70));
+
+        //selected item
         for (BoardConfig preset : difficulties) {
             if (preset.getName().equals(mainFrame.getConfig().getBoard().getName())) {
                 difficultyBox.setSelectedItem(preset);
             }
         }
-
         difficultyBox.setPreferredSize(new Dimension(450, 70));
         difficultyBox.setFont(new Font("Arial", Font.BOLD, 20));
         difficultyBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         difficultyBox.addActionListener(e -> {
+            //enabling set difficulty button
             if (mainFrame.getConfig().getBoard().equals(difficultyBox.getSelectedItem())) {
                 setDifficulty.setEnabled(false);
             } else {
@@ -56,6 +78,7 @@ public class Settings extends JFrame {
             }
         });
 
+        //set difficulty button
         setDifficulty = new JButton("SET DIFFICULTY");
         setDifficulty.setFont(new Font("Arial", Font.BOLD, 20));
         setDifficulty.setFocusPainted(false);
@@ -74,6 +97,7 @@ public class Settings extends JFrame {
         settingsMenu.add(setDifficulty);
         settingsMenu.add(Box.createVerticalStrut(25));
 
+        //change names button
         JButton changeNames = new JButton("CHANGE PLAYER NAMES");
         changeNames.setAlignmentX(Component.CENTER_ALIGNMENT);
         changeNames.setFont(new Font("Arial", Font.BOLD, 20));
@@ -88,6 +112,7 @@ public class Settings extends JFrame {
         settingsMenu.add(changeNames);
         settingsMenu.add(Box.createVerticalStrut(25));
 
+        //color picker for player 1
         JButton pickColor1 = new JButton();
         pickColor1.setAlignmentX(Component.CENTER_ALIGNMENT);
         pickColor1.setFont(new Font("Arial", Font.BOLD, 20));
@@ -100,13 +125,16 @@ public class Settings extends JFrame {
             Color color1 = JColorChooser.showDialog(this, "CHOOSE COLOR", Color.BLACK);
 
             if (color1 != null) {
+                //background color change
                 pickColor1.setBackground(color1);
                 mainFrame.getConfig().setColor1(ColorHex.colorToHex(color1));
                 ConfigManager.save(mainFrame.getConfig());
             }
         });
+
         settingsMenu.add(pickColor1);
 
+        //color picker for player 2
         JButton pickColor2 = new JButton();
         pickColor2.setAlignmentX(Component.CENTER_ALIGNMENT);
         pickColor2.setFont(new Font("Arial", Font.BOLD, 20));
@@ -119,14 +147,17 @@ public class Settings extends JFrame {
             Color color2 = JColorChooser.showDialog(this, "CHOOSE COLOR", Color.BLACK);
 
             if (color2 != null) {
+                //background color change
                 pickColor2.setBackground(color2);
                 mainFrame.getConfig().setColor2(ColorHex.colorToHex(color2));
                 ConfigManager.save(mainFrame.getConfig());
             }
         });
+
         settingsMenu.add(pickColor2);
         settingsMenu.add(Box.createVerticalStrut(25));
 
+        //reset stats button
         JButton resetStats = new JButton("RESET STATS");
         resetStats.setAlignmentX(Component.CENTER_ALIGNMENT);
         resetStats.setFont(new Font("Arial", Font.BOLD, 20));
@@ -137,19 +168,21 @@ public class Settings extends JFrame {
         resetStats.addActionListener(e -> {
             resetStats.setText("DONE");
 
+            //timer for changing the text from "DONE" back to "RESET STATS"
             new javax.swing.Timer(1000, ev -> {
                 resetStats.setText("RESET STATS");
             }) {{
                 setRepeats(false);
                 start();
             }};
-
             mainFrame.getConfig().resetStats();
             ConfigManager.save(mainFrame.getConfig());
         });
+
         settingsMenu.add(resetStats);
         settingsMenu.add(Box.createVerticalStrut(25));
 
+        //save stats button
         JButton saveStats = new JButton("EXPORT STATS");
         saveStats.setAlignmentX(Component.CENTER_ALIGNMENT);
         saveStats.setFont(new Font("Arial", Font.BOLD, 20));
@@ -161,7 +194,9 @@ public class Settings extends JFrame {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("EXPORT STATISTICS");
 
-            //external code - @Microsoft Copilot
+            //external code
+            //@Microsoft Copilot
+            //used for creating a .txt file with statistics for exporting
             fileChooser.setSelectedFile(new File("stats.txt"));
 
             fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Text files (*.txt)", "txt"));
@@ -192,14 +227,16 @@ public class Settings extends JFrame {
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "Error ocurred wile exporting.");
+                    JOptionPane.showMessageDialog(this, "Error occurred wile exporting.");
                 }
             }
         });
         //
+
         settingsMenu.add(saveStats);
         settingsMenu.add(Box.createVerticalStrut(25));
 
+        //default settings button
         JButton resetSettings = new JButton("DEFAULT SETTINGS");
         resetSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
         resetSettings.setFont(new Font("Arial", Font.BOLD, 20));
@@ -210,6 +247,7 @@ public class Settings extends JFrame {
         resetSettings.addActionListener(e -> {
             resetSettings.setText("DONE");
 
+            //timer for changing the text from "DONE" back to "DEFAULT SETTINGS"
             new javax.swing.Timer(1000, ev -> {
                 resetSettings.setText("DEFAULT SETTINGS");
             }) {{
@@ -217,7 +255,7 @@ public class Settings extends JFrame {
                 start();
             }};
 
-
+            //resetting settings
             mainFrame.getConfig().setBoard(GamePresets.DEFAULT);
             mainFrame.getConfig().setPlayer1Name(GameConfig.defaultp1);
             mainFrame.getConfig().setPlayer2Name(GameConfig.defaultp2);
@@ -230,9 +268,11 @@ public class Settings extends JFrame {
             color2.setText("CHOOSE O COLOR - " + mainFrame.getConfig().getPlayer2Name());
             ConfigManager.save(mainFrame.getConfig());
         });
+
         settingsMenu.add(resetSettings);
         settingsMenu.add(Box.createVerticalStrut(25));
 
+        //exit button
         JButton exitSettings = new JButton("EXIT");
         exitSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitSettings.setFont(new Font("Arial", Font.BOLD, 20));
@@ -245,18 +285,22 @@ public class Settings extends JFrame {
 
         add(settingsMenu, BorderLayout.EAST);
 
+        //titles panel
         titles = new JPanel();
         titles.setLayout(new BoxLayout(titles, BoxLayout.Y_AXIS));
         titles.setBorder(BorderFactory.createEmptyBorder(105, 80, 50 ,50));
 
+        //difficulty label
         JLabel difficultyLabel = new JLabel("CHANGE DIFFICULTY");
         difficultyLabel.setFont(new Font("Arial", Font.BOLD, 30));
         difficultyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        //color 1 label
         color1 = new JLabel("CHOOSE X COLOR - " + mainFrame.getConfig().getPlayer1Name());
         color1.setFont(new Font("Arial", Font.BOLD, 30));
         color1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        //color 2 label
         color2 = new JLabel("CHOOSE O COLOR - " + mainFrame.getConfig().getPlayer2Name());
         color2.setFont(new Font("Arial", Font.BOLD, 30));
         color2.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -272,6 +316,7 @@ public class Settings extends JFrame {
         setVisible(true);
     }
 
+    //getters
     public MainFrame getMainFrame() {
         return mainFrame;
     }
@@ -280,15 +325,7 @@ public class Settings extends JFrame {
         return color1;
     }
 
-    public void setColor1(JLabel color1) {
-        this.color1 = color1;
-    }
-
     public JLabel getColor2() {
         return color2;
-    }
-
-    public void setColor2(JLabel color2) {
-        this.color2 = color2;
     }
 }

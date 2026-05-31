@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * game management class
+ * Game management class
  * used for creating and managing a game
  * contains methods for creating a game
  * contains methods for playing a game
@@ -28,7 +28,7 @@ public class Game {
 
     private ArrayList<int[]> winningCells;
 
-    //core.Game constructor
+    //constructor
     public Game(BoardConfig boardConfig, String name1, String name2, Color color1, Color color2, GameConfig gameConfig) {
         this.boardConfig = boardConfig;
         this.gameConfig = gameConfig;
@@ -127,9 +127,9 @@ public class Game {
     }
 
     /**
-     * method for makeing a move and occupying a space
+     * method for making a move and occupying a space
      * @param row - game board row
-     * @param column - gmae board column
+     * @param column - game board column
      * @return boolean - false if the space is not in bounds or occupied
      *                 - true if the space has been occupied
      */
@@ -155,7 +155,7 @@ public class Game {
     }
 
     /**
-     * method for checking if the choosen space is in the bounds of the game board
+     * method for checking if the chosen space is in the bounds of the game board
      * @param row - game board row
      * @param column - game board column
      * @return boolean - true if the space is in bounds

@@ -1,7 +1,7 @@
 package core;
 
 /**
- * game board management class
+ * GameBoard management class
  * used for creating amd managing a game board
  * @author Matej Kesl
  */
@@ -17,23 +17,6 @@ public class GameBoard {
         this.rows = rows;
         this.columns = columns;
         this.winLength = winLength;
-    }
-
-    //getters
-    public String getCell(int row, int column) {
-        return board[row][column];
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
-    public int getColumns() {
-        return columns;
-    }
-
-    public int getWinLength() {
-        return winLength;
     }
 
     /**
@@ -58,9 +41,26 @@ public class GameBoard {
     }
 
     /**
-     * method for reseting a game board
+     * method for resetting a game board
      */
     public void reset() {
         this.board = new String[rows][columns];
+    }
+
+    //getters
+    public String getCell(int row, int column) {
+        return board[row][column];
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public int getWinLength() {
+        return winLength;
     }
 }

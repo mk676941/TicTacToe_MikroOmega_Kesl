@@ -8,6 +8,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
 
+/**
+ * NameChange frame class
+ * used for settings up the NameChange frame
+ * used for changing player names
+ * contains constructor for setting up the frame and its content
+ * @author Matej Kesl
+ */
 public class NameChange extends JFrame {
     private JTextField nameField1;
     private JTextField nameField2;
@@ -15,9 +22,17 @@ public class NameChange extends JFrame {
     private JButton exit;
     private Settings settings;
 
+    /**
+     * NameChange constructor
+     * contains 2 text field for changing player names
+     * contains button for applying changed names
+     * contains button for exiting the frame
+     * @param settings - Settings frame
+     */
     public NameChange(Settings settings) {
         this.settings = settings;
 
+        //frame
         setTitle("Name change");
         setSize(800, 550);
         setLocationRelativeTo(null);
@@ -25,20 +40,25 @@ public class NameChange extends JFrame {
         setLayout(new BorderLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        //main panel
         JPanel panel = new JPanel();
         panel.setLayout((new BoxLayout(panel, BoxLayout.Y_AXIS)));
         panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50 ,50));
 
+        //top panel
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
         top.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 47));
         top.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        //text field for player 1
         nameField1 = new JTextField(settings.getMainFrame().getConfig().getPlayer1Name());
         nameField1.setPreferredSize(new Dimension(350, 70));
         nameField1.setFont(new Font("Arial", Font.BOLD, 20));
 
-        //external code - @Microsoft Copilot
+        //external code
+        //@Microsoft Copilot
+        //used for limiting the character count in text field 1
         ((AbstractDocument) nameField1.getDocument())
                 .setDocumentFilter(new DocumentFilter() {
 
@@ -66,6 +86,7 @@ public class NameChange extends JFrame {
             nameField1.transferFocus();
         });
 
+        //X label
         JLabel p1 = new JLabel("X");
         p1.setFont(new Font("Arial", Font.BOLD, 30));
 
@@ -76,16 +97,20 @@ public class NameChange extends JFrame {
         panel.add(top);
         panel.add(Box.createVerticalStrut(5));
 
+        //bottom panel
         JPanel bottom = new JPanel();
         bottom.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
         bottom.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 50));
         top.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        //text field for player 2
         nameField2 = new JTextField(settings.getMainFrame().getConfig().getPlayer2Name());
         nameField2.setPreferredSize(new Dimension(350, 70));
         nameField2.setFont(new Font("Arial", Font.BOLD, 20));
 
-        //external code - @Microsoft Copilot
+        //external code
+        //@Microsoft Copilot
+        //used for limiting the character count in text field 2
         ((AbstractDocument) nameField2.getDocument())
                 .setDocumentFilter(new DocumentFilter() {
 
@@ -113,6 +138,7 @@ public class NameChange extends JFrame {
             nameField2.transferFocus();
         });
 
+        //O label
         JLabel p2 = new JLabel("O");
         p2.setFont(new Font("Arial", Font.BOLD, 30));
 
@@ -123,6 +149,7 @@ public class NameChange extends JFrame {
         panel.add(bottom);
         panel.add(Box.createVerticalStrut(25));
 
+        //applyNames button
         applyNames = new JButton("APPLY NAMES");
         applyNames.setFont(new Font("Arial", Font.BOLD, 20));
         applyNames.setFocusPainted(false);
@@ -142,6 +169,7 @@ public class NameChange extends JFrame {
         panel.add(applyNames);
         panel.add(Box.createVerticalStrut(25));
 
+        //exit button
         exit = new JButton("EXIT");
         exit.setFont(new Font("Arial", Font.BOLD, 20));
         exit.setFocusPainted(false);

@@ -1,8 +1,8 @@
 package gameBoard;
 
 /**
- * board configuration class
- * used for configuring a gameboard
+ * GameBoard configuration class
+ * used for configuring a game board
  * @author Matej Kesl
  */
 public class BoardConfig {
@@ -11,7 +11,7 @@ public class BoardConfig {
     private int winLength;
     private String name;
 
-    //gameBoard.BoardConfig constructor
+    //constructor
     public BoardConfig(int rows, int columns, int winLength, String name) {
         this.rows = rows;
         this.columns = columns;

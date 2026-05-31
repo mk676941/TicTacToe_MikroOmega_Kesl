@@ -5,28 +5,45 @@ import gameConfig.ConfigManager;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * MainFrame frame class
+ * used for setting up the frame and its content
+ * contains methods for creating other frames
+ * @author Matej Kesl
+ */
 public class MainFrame extends JFrame{
     private JPanel mainMenu;
     private GameConfig config;
 
+    /**
+     * MainFrame constructor
+     * contains Tic-Tac-Toe JLabel
+     * contains Play, Settings, Statistics, Exit buttons
+     * loads data from JSON when created
+     */
     public MainFrame() {
         config = ConfigManager.load();
 
+        //frame
         setTitle("Tic-Tac-Toe");
         setSize(1200, 800);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        //panel
         mainMenu = new JPanel();
         mainMenu.setLayout(new BoxLayout(mainMenu, BoxLayout.Y_AXIS));
 
+        //label
         JLabel label = new JLabel("Tic-Tac-Toe");
         label.setFont(new Font("Arial", Font.BOLD, 80));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         mainMenu.add(label);
         mainMenu.add(Box.createVerticalStrut(80));
 
+        //play button
         JButton play = new JButton("PLAY");
         play.setFont(new Font("Arial", Font.BOLD, 20));
         play.setFocusPainted(false);
@@ -34,9 +51,11 @@ public class MainFrame extends JFrame{
         play.setMaximumSize(new Dimension(350, 70));
         play.setPreferredSize(new Dimension(350, 70));
         play.addActionListener(e -> showPlay());
+
         mainMenu.add(play);
         mainMenu.add(Box.createVerticalStrut(25));
 
+        //settings button
         JButton settings = new JButton("SETTINGS");
         settings.setFont(new Font("Arial", Font.BOLD, 20));
         settings.setFocusPainted(false);
@@ -44,9 +63,11 @@ public class MainFrame extends JFrame{
         settings.setMaximumSize(new Dimension(350, 70));
         settings.setPreferredSize(new Dimension(350, 70));
         settings.addActionListener(e -> showSettings());
+
         mainMenu.add(settings);
         mainMenu.add(Box.createVerticalStrut(25));
 
+        //statistics button
         JButton stats = new JButton("STATISTICS");
         stats.setFont(new Font("Arial", Font.BOLD, 20));
         stats.setFocusPainted(false);
@@ -54,9 +75,11 @@ public class MainFrame extends JFrame{
         stats.setMaximumSize(new Dimension(350, 70));
         stats.setPreferredSize(new Dimension(350, 70));
         stats.addActionListener(e -> showStatistics());
+
         mainMenu.add(stats);
         mainMenu.add(Box.createVerticalStrut(25));
 
+        //exit button
         JButton exit = new JButton("EXIT");
         exit.setFont(new Font("Arial", Font.BOLD, 20));
         exit.setFocusPainted(false);
@@ -64,32 +87,45 @@ public class MainFrame extends JFrame{
         exit.setMaximumSize(new Dimension(350, 70));
         exit.setPreferredSize(new Dimension(350, 70));
         exit.addActionListener(e -> dispose());
+
         mainMenu.add(exit);
 
         mainMenu.setVisible(true);
         add(mainMenu);
-
         setVisible(true);
     }
 
+    /**
+     * method for creating Play frame
+     */
     public void showPlay() {
         new Play(config);
         revalidate();
         repaint();
     }
 
+    /**
+     * method for creating Settings frame
+     */
     public void showSettings() {
         new Settings(this);
         revalidate();
         repaint();
     }
 
+    /**
+     * method for creating Statistics frame
+     */
     public void showStatistics() {
         new Statistics(this);
         revalidate();
         repaint();
     }
 
+    /**
+     * getter for GameConfig
+     * @return GameConfig - game data
+     */
     public GameConfig getConfig() {
         return config;
     }

@@ -11,7 +11,7 @@ import java.awt.*;
 public class ColorHex {
 
     /**
-     * method used for converting a Color type object to a String type hex
+     * static method used for converting a Color type object to a String type hex
      * @param color - color for conversion
      * @return String - hex from color
      */
@@ -20,7 +20,7 @@ public class ColorHex {
     }
 
     /**
-     * method used for converting a String type hex to a Color type object
+     * static method used for converting a String type hex to a Color type object
      * @param hex - hex for conversion
      * @return Color - color from hex
      */

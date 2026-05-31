@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * config management class
+ * ConfigManager class
  * used for saving and loading config from a JSON file
  * contains methods for saving and loading data to or from a JSON file
  * @author Matej Kesl
@@ -21,7 +21,7 @@ public class ConfigManager {
     private static final String filePath = "config.json";
 
     /**
-     * method used for saving game config into an existing JSON file
+     * static method used for saving game config into an existing JSON file
      * @param config - game config to save
      */
     public static void save(GameConfig config) {
@@ -37,7 +37,7 @@ public class ConfigManager {
     }
 
     /**
-     * mathod used for loading game config for a JSON file
+     * static method used for loading game config for a JSON file
      * method used for creating a default config JSON file
      * @return gameConfig.GameConfig - game config from a JSON file
      */

@@ -6,6 +6,14 @@ import gameConfig.GameConfig;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Play frame class
+ * used for setting up the Play frame
+ * contains constructor for setting up the frame and its content
+ * contains method for showing the result of the game
+ * contains method for getting win line pixel coordinations
+ * @author Matej Kesl
+ */
 public class Play extends JFrame {
     private Game game;
     private JButton[][] buttons;
@@ -16,10 +24,16 @@ public class Play extends JFrame {
     private JButton reset;
     private JButton showLine;
     private JLabel playerLabel;
-    private JLabel playereName;
+    private JLabel playerName;
     private boolean lineVisible = false;
     private JLabel txt;
 
+    /**
+     * method used for showing the result message
+     * hides the reset button
+     * shows the show win line button
+     * @param text - String to display after game ends
+     */
     public void showResult(String text) {
         overlay.removeAll();
         txt = new JLabel(text);
@@ -41,34 +55,44 @@ public class Play extends JFrame {
         repaint();
     }
 
+    /**
+     * Play constructor
+     * contains game grid panel
+     * contains upper panel with player name and player symbol labels
+     * contains lower panel with exit, reset and show win line buttons
+     * @param gameConfig - game data for creating a game
+     */
     public Play(GameConfig gameConfig) {
+        //frame
         setTitle("Tic-Tac-Toe");
         setLayout(new BorderLayout());
         setResizable(false);
         setPreferredSize(new Dimension(700, 1000));
-
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        //game creation
         game = new Game(gameConfig.getBoard(), gameConfig.getPlayer1Name(), gameConfig.getPlayer2Name(), ColorHex.hexToColor(gameConfig.getColor1()), ColorHex.hexToColor(gameConfig.getColor2()), gameConfig);
         int rows = game.getGameBoard().getRows();
         int cols = game.getGameBoard().getColumns();
-
         buttons = new JButton[rows][cols];
 
+        //overlay panel
         overlay = new JPanel(new BorderLayout()) {
-
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
                 if (!lineVisible || game.getWinningCells().isEmpty()) return;
 
+                //stroke settings
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setStroke(new BasicStroke(10));
                 g2.setColor(Color.BLACK);
 
+                //line location
                 int[][] line = getLinePixelCoords();
 
+                //drawing line
                 g2.drawLine(line[0][0], line[0][1], line[1][0], line[1][1]);
             }
         };
@@ -76,15 +100,18 @@ public class Play extends JFrame {
         overlay.setBorder(BorderFactory.createEmptyBorder(30, 0, 50, 0));
         setGlassPane(overlay);
 
+        //game grid panel
         JPanel gameGrid = new JPanel(new GridLayout(rows, cols));
         gameGrid.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
+        //game buttons
         for (int i = 0; i<rows; i++) {
             for (int j = 0; j < cols; j++) {
 
                 int row = i;
                 int col = j;
 
+                //border coloring
                 int top = 0;
                 int left = 0;
                 int bottom = 0;
@@ -93,6 +120,7 @@ public class Play extends JFrame {
                 if (i > 0) top = 2;
                 if (j > 0) left = 2;
 
+                //button settings
                 buttons[i][j] = new JButton();
                 buttons[i][j].setFocusPainted(false);
                 buttons[i][j].setContentAreaFilled(false);
@@ -104,24 +132,30 @@ public class Play extends JFrame {
 
                 buttons[i][j].addActionListener(e -> {
                     Player currentPlayer = game.getCurrentPlayer();
-
                     String result = game.play(row, col);
 
+                    //invalid
                     if (result.equals("Invalid move")) return;
 
+                    //button text
                     buttons[row][col].setText(game.getGameBoard().getCell(row, col));
                     buttons[row][col].setForeground(currentPlayer.getColor());
 
+                    //labels change
                     if (result.equals("Continue")) {
-                        playereName.setText(game.getCurrentPlayer().getName());
+                        playerName.setText(game.getCurrentPlayer().getName());
                         playerLabel.setText(game.getCurrentPlayer().getValue());
                         playerLabel.setForeground(game.getCurrentPlayer().getColor());
                     }
 
+                    //win message
                     if (result.equals("Win")) {
                         showResult(game.getCurrentPlayer().getName() + " won the game!");
 
-                    } else if (result.equals("Draw")) {
+                    }
+
+                    //draw message
+                    if (result.equals("Draw")) {
                         showResult("The game resulted in a draw.");
                         showLine.setVisible(false);
                         lowerPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 60, 30));
@@ -130,15 +164,19 @@ public class Play extends JFrame {
                     revalidate();
                     repaint();
                 });
+
                 gameGrid.add(buttons[i][j]);
             }
         }
+
         add(gameGrid, BorderLayout.CENTER);
 
+        //lower panel
         lowerPanel = new JPanel();
         lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.Y_AXIS));
         lowerPanel.setBorder(BorderFactory.createEmptyBorder(0, 30, 30, 30));
 
+        //reset button
         reset = new JButton("RESET");
         reset.setAlignmentX(Component.CENTER_ALIGNMENT);
         reset.setFont(new Font("Arial", Font.BOLD, 20));
@@ -148,10 +186,11 @@ public class Play extends JFrame {
 
         reset.addActionListener(e -> {
             game.restart();
-            playereName.setText(game.getCurrentPlayer().getName());
+            playerName.setText(game.getCurrentPlayer().getName());
             playerLabel.setText(game.getCurrentPlayer().getValue());
             playerLabel.setForeground(game.getCurrentPlayer().getColor());
 
+            //removing button text
             for (int i = 0; i < game.getGameBoard().getRows(); i++) {
                 for (int j = 0; j < game.getGameBoard().getColumns(); j++) {
                     buttons[i][j].setText("");
@@ -162,8 +201,10 @@ public class Play extends JFrame {
             revalidate();
             repaint();
         });
+
         lowerPanel.add(reset);
 
+        //exit button
         exit = new JButton("EXIT");
         exit.setAlignmentX(Component.CENTER_ALIGNMENT);
         exit.setFont(new Font("Arial", Font.BOLD, 20));
@@ -176,25 +217,30 @@ public class Play extends JFrame {
 
         add(lowerPanel, BorderLayout.SOUTH);
 
+        //upper panel
         upperPanel = new JPanel();
         upperPanel.setLayout(new BoxLayout(upperPanel, BoxLayout.Y_AXIS));
         upperPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 0, 30));
 
-        playereName = new JLabel(game.getCurrentPlayer().getName());
-        playereName.setFont(new Font("Arial", Font.BOLD, 50));
-        playereName.setAlignmentX(Component.CENTER_ALIGNMENT);
-        upperPanel.add(playereName);
+        //player name label
+        playerName = new JLabel(game.getCurrentPlayer().getName());
+        playerName.setFont(new Font("Arial", Font.BOLD, 50));
+        playerName.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        upperPanel.add(playerName);
         upperPanel.add(Box.createVerticalStrut(20));
 
+        //player symbol label
         playerLabel = new JLabel(game.getCurrentPlayer().getValue());
         playerLabel.setForeground(game.getCurrentPlayer().getColor());
         playerLabel.setFont(new Font("Arial", Font.BOLD, 50));
         playerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         upperPanel.add(playerLabel);
 
         add(upperPanel, BorderLayout.NORTH);
 
-
+        //show win line button
         showLine = new JButton("SHOW WIN LINE");
         showLine.setAlignmentX(Component.CENTER_ALIGNMENT);
         showLine.setFont(new Font("Arial", Font.BOLD, 20));
@@ -204,32 +250,41 @@ public class Play extends JFrame {
         showLine.setVisible(false);
 
         showLine.addActionListener(e -> {
+            //toggling the win line on and off
             lineVisible = !lineVisible;
 
             if (lineVisible) {
+                //line is visible
                 showLine.setText("HIDE WIN LINE");
                 upperPanel.removeAll();
-                upperPanel.add(playereName);
+                upperPanel.add(playerName);
                 upperPanel.add(Box.createVerticalStrut(20));
                 upperPanel.add(playerLabel);
                 txt.setVisible(false);
             } else {
+                //line isn't visible
                 showLine.setText("SHOW WIN LINE");
                 upperPanel.removeAll();
                 upperPanel.add(Box.createVerticalStrut(138));
                 txt.setVisible(true);
             }
-
             overlay.repaint();
         });
         lowerPanel.add(showLine);
 
+        //frame size
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    //external code - @Microsoft Copilot
+    //external code
+    //@Microsoft Copilot
+    //method for getting pixel coordinations of the center of all win line cells in the game grid
+    /**
+     * method for getting pixel coordinations of the center of all win line cells in the game grid
+     * @return int[][] - returns 2D field with x and y coordinations of the center of a win line cell
+     */
     private int[][] getLinePixelCoords() {
         java.util.List<int[]> cells = game.getWinningCells();
 
@@ -263,5 +318,4 @@ public class Play extends JFrame {
         };
     }
     //
-
 }

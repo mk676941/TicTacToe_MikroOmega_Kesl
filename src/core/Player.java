@@ -3,7 +3,7 @@ package core;
 import java.awt.*;
 
 /**
- * player management class
+ * Player management class
  * used for creating and managing a player
  * @author Matej Kesl
  */

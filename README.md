@@ -28,7 +28,7 @@ All game settings and statistics are saved inside a JSON file.
 - Player 2 wins count
 
 ## How to run the game
-For running the game, you have to have Java 23 installed.
+For running the game, you have to have Java installed.
 1. Download the latest release asset
 2. Extract the zip file with the game jar
 3. Open a command prompt and change the current folder to location of the jar file
@@ -41,3 +41,7 @@ In case you experience a bug with the color pickers, add the following java opti
 ```bash
 -Dsun.java2d.d3d=false
 ```
+## Author
+- Author: Matej Kesl
+- Program language: Java 23
+- UI Framwork: Java Swing
